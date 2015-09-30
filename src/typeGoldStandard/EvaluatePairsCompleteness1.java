@@ -25,7 +25,7 @@ public class EvaluatePairsCompleteness1 {
  * 
  * To control data skew, we disregard types that cover more than 5000 sameAs links.
  * We believe this is necessary anyways in a practical setting.
- * This is similar
+ * 
  * @author Mayank
  *
  */
