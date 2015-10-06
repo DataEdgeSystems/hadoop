@@ -60,7 +60,7 @@ public class MatcherOnSameAsFile {
 	  public boolean classifierOn=false;
 	//  static int purgeThreshold=10;	//we will tolerate up to 10 entities/dataset
 	//  static int reducerThreshold=100; //reducer will not allow more than this many entities/bkv to be processed
-	  static double matcherThreshold=0.5;
+	  static double matcherThreshold=0.0;
 	  static String[] tokenizer={"/", ",", ":", ";", "\\(", "\\)", "\\.", 
 				"\"", "_", "-", "#", "\\\\", "\\s+"};
 	  
