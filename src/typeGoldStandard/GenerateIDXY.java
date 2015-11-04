@@ -11,7 +11,7 @@ import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
-
+@Deprecated
 public class GenerateIDXY {
 /**
  * Meant for taking freebaseDbpediaAppend and one of the f-db-*score*.txt files

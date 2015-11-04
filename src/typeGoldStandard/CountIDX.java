@@ -18,9 +18,7 @@ public class CountIDX {
  * <fr-type>[tab]<db-type>[tab]<count>
  * where count refers to the number of sameAs links (or IDXs) covered by that type. The counts may obviously 'overlap', but the
  * goal of this file is to diagnose (potential) data skew in the GenerateIDXY file.
- * We can also compute a lower bound on RR (it is a lower-bound because more than
- * one type-pair often covers a given instance. The RR would still be correct if we do
- * not do explicit candidate set generation/deduplication.
+ * 
  * @author Mayank
  *
  */
