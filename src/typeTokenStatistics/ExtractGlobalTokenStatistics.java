@@ -16,6 +16,9 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 public class ExtractGlobalTokenStatistics {
 /**
  * This file is only for extracting global token sets. Property distinctions will be ignored.
+ *I've deprecated DbpediaTypeTokenStatistics because I intend to use this file
+ *for all JSONs including YAGO. Note that the file (the 'typeString' field) will
+ *have to be modified accordingly based on the JSON.
  * @author Mayank
  *
  */
@@ -27,6 +30,8 @@ public class ExtractGlobalTokenStatistics {
 	  static String[] tokenizer={"/", ",", ":", ";", "\\(", "\\)", "\\.", 
 			"\"", "_", "-", "#", "\\\\", "\\s+"};	//everything here will be replaced with space when processing.
 		//as a safety measure, we convert the json object to lowercase.
+	  static String typeString="rdf:type";
+	  
 	  
     public void map(Object key, Text value, Context context
                     ) throws IOException, InterruptedException {
@@ -58,7 +63,7 @@ public class ExtractGlobalTokenStatistics {
 			String[] list=values.split("\", \"");
 			
 			//treat type values more conservatively; do not tokenize
-			if(prop.equals("<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>")){
+			if(prop.equals(typeString)){
 				typeTrue=true;
 				for(String l: list)
 					props.get(prop).add(l.replaceAll("\"", ""));
@@ -86,7 +91,7 @@ public class ExtractGlobalTokenStatistics {
 		if(typeTrue){
 			//for(String type: props.get("<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>")){
 				for(String p: props.keySet())
-					if(p.equals("<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>"))
+					if(p.equals(typeString))
 						continue;
 					else
 						for(String token: props.get(p)){
@@ -97,7 +102,7 @@ public class ExtractGlobalTokenStatistics {
 	//	}
 		//also record type-dependent but property-independent occurrence of tokens
 		for(String t: globalTokenSet)
-			for(String type: props.get("<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>"))
+			for(String type: props.get(typeString))
 				context.write(new Text(type+"\t"+t), one);
 		
     	
@@ -131,7 +136,7 @@ public class ExtractGlobalTokenStatistics {
       System.err.println("Usage: wordcount <in> <out>");
       System.exit(2);
     }*/
-    Job job = new Job(conf, "counting global type statistics: freebase");
+    Job job = new Job(conf, "counting global type statistics: yago");
     job.setJarByClass(ExtractGlobalTokenStatistics.class);
     job.setMapperClass(TokenizerMapper.class);
    // job.setCombinerClass(IntSumReducer.class);
